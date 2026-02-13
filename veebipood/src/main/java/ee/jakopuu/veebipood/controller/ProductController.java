@@ -10,11 +10,6 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-//    @GetMapping("products")
-//    public String helloworld(){
-//        return "Hello world";
-//    }
-
     @Autowired
     private ProductRepository productRepository;
 
@@ -24,6 +19,11 @@ public class ProductController {
     }
 
     @GetMapping("products/{id}")
+    public Product getOneProducts(@PathVariable Long id){
+        return productRepository.findById(id).orElseThrow( );
+    }
+
+    @DeleteMapping("products/{id}")
     public List<Product> deleteProduct(@PathVariable Long id){
         productRepository.deleteById(id);
         return productRepository.findAll();
@@ -31,6 +31,20 @@ public class ProductController {
 
     @PostMapping("products")
     public List<Product> addProduct(@RequestBody Product product){
+        if (product.getId()!=null){
+            throw new RuntimeException("Cannot add with ID");
+        }
+        productRepository.save(product);
+        return productRepository.findAll();
+    }
+    @PutMapping("products")
+    public List<Product> editProduct(@RequestBody Product product){
+        if (product.getId()==null){
+            throw new RuntimeException("Cannot edit without ID");
+        }
+        if (!productRepository.existsById(product.getId())){
+            throw new RuntimeException("Product ID does not exit");
+        }
         productRepository.save(product);
         return productRepository.findAll();
     }
