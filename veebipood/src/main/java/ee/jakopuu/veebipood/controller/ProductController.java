@@ -34,5 +34,4 @@ public class ProductController {
         productRepository.save(product);
         return productRepository.findAll();
     }
-
 }
