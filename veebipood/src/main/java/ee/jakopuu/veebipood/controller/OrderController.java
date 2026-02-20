@@ -1,15 +1,22 @@
 package ee.jakopuu.veebipood.controller;
 
 import ee.jakopuu.veebipood.Repository.OrderRepository;
+import ee.jakopuu.veebipood.dto.OrderRowDto;
 import ee.jakopuu.veebipood.entity.Order;
+import ee.jakopuu.veebipood.entity.OrderRow;
+import ee.jakopuu.veebipood.service.OrderService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class OrderController {
-    @Autowired
+
+    private OrderService orderService;
     private OrderRepository orderRepository;
 
     @GetMapping("orders")
@@ -24,9 +31,11 @@ public class OrderController {
     }
 
     @PostMapping("orders")
-    public List<Order> addOrder(@RequestBody Order Order){
-        orderRepository.save(Order);
-        return orderRepository.findAll();
+    public Order addOrder(@RequestParam Long personid,
+                                @RequestParam(required = false) String parcelMachine,
+                                @RequestBody List<OrderRowDto> orderRows){
+        return orderService.saveOrder(personid,parcelMachine,orderRows);
+        //return orderRepository.findAll();
     }
 
 }

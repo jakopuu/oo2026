@@ -12,18 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Product {
+public class OrderRow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private double price;
-    private boolean active;
-    private int stock;
 
     @ManyToOne
-    private Category category;
+    private Product product;
+
+    private int quantity;
+
 }
-
-
