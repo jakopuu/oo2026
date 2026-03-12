@@ -1,4 +1,4 @@
-package ee.jakopuu.film.entity;
+package ee.jakopuu.teisendamine.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,11 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Movie {
+public class Number {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private int lengthInMin;
+    private Integer arv ;
 }

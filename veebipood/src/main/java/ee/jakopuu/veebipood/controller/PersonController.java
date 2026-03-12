@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class PersonController {
 
-    @Autowired
+     @Autowired
     private PersonService personService;
 
     @Autowired
@@ -38,9 +38,9 @@ public class PersonController {
     @PostMapping("login")
     public Person login(@RequestBody PersonLoginRecordDto personDto) {
         Person dbPerson =personRepository.findByEmail(personDto.email());
-        if(dbPerson == null){
-            throw new RuntimeException("Invalid email");
-        }
+            if(dbPerson == null){
+                throw new RuntimeException("Invalid email");
+            }
         if(!dbPerson.getPassword().equals(personDto.password())){
             throw new RuntimeException("Invalid password");
         }
