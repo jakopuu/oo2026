@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class PersonController {
 
      @Autowired
@@ -24,7 +25,7 @@ public class PersonController {
         return personRepository.findAll();
     }
 
-    @GetMapping("persons/{id}")
+    @DeleteMapping("persons/{id}")
     public List<Person> deletePerson(@PathVariable Long id){
         personRepository.deleteById(id);
         return personRepository.findAll();
@@ -32,9 +33,27 @@ public class PersonController {
 
     @PostMapping("signup")
     public Person signup(@RequestBody Person person){
+        if (person.getId() != null) {
+            throw new RuntimeException("Cannot sign up with ID");
+        }
         personService.validate(person);
         return personRepository.save(person);
     }
+
+    @GetMapping("profile")
+    public Person getProfile(@RequestParam Long id) {
+        return personRepository.findById(id).orElseThrow();
+    }
+
+    @PutMapping("profile")
+    public Person updateProfile(@RequestBody Person person){
+        if (person.getId() == null) {
+            throw new RuntimeException("Cannot update without ID");
+        }
+        personService.validate(person);
+        return personRepository.save(person);
+    }
+
     @PostMapping("login")
     public Person login(@RequestBody PersonLoginRecordDto personDto) {
         Person dbPerson =personRepository.findByEmail(personDto.email());

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
@@ -17,7 +18,7 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 
-    @GetMapping("categories/{id}")
+    @DeleteMapping("categories/{id}")
     public List<Category> deleteCategory(@PathVariable Long id){
         categoryRepository.deleteById(id);
         return categoryRepository.findAll();

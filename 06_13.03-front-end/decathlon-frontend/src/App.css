@@ -1,0 +1,9 @@
+body {
+  font-family: sans-serif;
+  max-width: 700px;
+  margin: 24px auto;
+}
+
+input {
+  margin-right: 6px;
+}
